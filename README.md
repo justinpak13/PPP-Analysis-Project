@@ -50,3 +50,14 @@ Before working with our data, we first need to set up GCP:
 
     <code>gcloud auth application-default login</code>
 
+* create access to 
+    * storage admin
+    * storage object admin 
+    * BigQuery admin
+* Under APIs and Services, enable the following:  
+    * Identity and Access Management (IAM) API
+    * IAM service account credentials API
+ 
+
+#### Creating Infrastructure for our project with Terrafrom
+ 
