@@ -25,10 +25,28 @@ The data workflow will consist of the following steps:
 3) Upload the parquet files into Google Cloud Storage 
 4) Upload our files in Google Cloud Storage into a table BigQuery 
 
-### Setting up GCP 
-Before working with our data, we first need to set up GCP 
+### Requirements
 
-After setting up an account and creating a project, we need to create an SSH key using the following link 
+#### Terraform 
 
-https://cloud.google.com/compute/docs/connect/create-ssh-keys
+https://www.terraform.io/downloads
+
+#### Setting up GCP 
+Before working with our data, we first need to set up GCP:
+* Create an account with Google email 
+* Set up the project 
+* setup service account and authentication for this project and download auth-keys
+    * go to IAM & Admin -> service accounts -> create service account
+    * grant accesss
+    * go to manage keys -> create new json key
+    * save to key folder in project 
+* download SDK for local setup 
+    * https://cloud.google.com/sdk
+* set up environment variable to point to your downloaded auth-keys 
+
+    <code> export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"</code>
+
+    Refresh token/session, and verify authentication
+
+    <code>gcloud auth application-default login</code>
 
