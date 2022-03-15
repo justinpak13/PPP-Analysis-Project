@@ -19,3 +19,45 @@ The Paycheck Protection Program prioritizes millions of Americans employed by sm
 
 I will be using GCP cloud storage as the data lake and Airflow in order to get the data into GCP. 
 
+The data workflow will consist of the following steps: 
+1) Downloading the csv files from the SBA website that we will store locally 
+2) Use a python script in order to convert the csv files into parquet 
+3) Upload the parquet files into Google Cloud Storage 
+4) Upload our files in Google Cloud Storage into a table BigQuery 
+
+### Requirements
+
+#### Terraform 
+
+https://www.terraform.io/downloads
+
+#### Setting up GCP 
+Before working with our data, we first need to set up GCP:
+* Create an account with Google email 
+* Set up the project 
+* setup service account and authentication for this project and download auth-keys
+    * go to IAM & Admin -> service accounts -> create service account
+    * grant accesss
+    * go to manage keys -> create new json key
+    * save to key folder in project 
+* download SDK for local setup 
+    * https://cloud.google.com/sdk
+* set up environment variable to point to your downloaded auth-keys 
+
+    <code> export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"</code>
+
+    Refresh token/session, and verify authentication
+
+    <code>gcloud auth application-default login</code>
+
+* create access to 
+    * storage admin
+    * storage object admin 
+    * BigQuery admin
+* Under APIs and Services, enable the following:  
+    * Identity and Access Management (IAM) API
+    * IAM service account credentials API
+ 
+
+#### Creating Infrastructure for our project with Terrafrom
+ 
