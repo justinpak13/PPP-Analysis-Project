@@ -19,3 +19,9 @@ The Paycheck Protection Program prioritizes millions of Americans employed by sm
 
 I will be using GCP cloud storage as the data lake and Airflow in order to get the data into GCP. 
 
+The data workflow will consist of the following steps: 
+1) Downloading the csv files from the SBA website that we will store locally 
+2) Use a python script in order to convert the csv files into parquet 
+3) Upload the parquet files into Google Cloud Storage 
+4) Upload our files in Google Cloud Storage into a table BigQuery 
+
