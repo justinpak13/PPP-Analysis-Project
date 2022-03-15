@@ -13,3 +13,9 @@ The Paycheck Protection Program prioritizes millions of Americans employed by sm
 * General facts of the program
 * What do the distributions of the funds look like compared to the makeup of [small businesses](https://cdn.advocacy.sba.gov/wp-content/uploads/2019/04/23142719/2019-Small-Business-Profiles-US.pdf)
  
+# Process
+
+## Creating a pipeline for processing this dataset & putting it into a data lake 
+
+I will be using GCP cloud storage as the data lake and Airflow in order to get the data into GCP. 
+
