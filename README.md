@@ -25,3 +25,10 @@ The data workflow will consist of the following steps:
 3) Upload the parquet files into Google Cloud Storage 
 4) Upload our files in Google Cloud Storage into a table BigQuery 
 
+### Setting up GCP 
+Before working with our data, we first need to set up GCP 
+
+After setting up an account and creating a project, we need to create an SSH key using the following link 
+
+https://cloud.google.com/compute/docs/connect/create-ssh-keys
+
