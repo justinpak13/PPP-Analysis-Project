@@ -59,5 +59,37 @@ Before working with our data, we first need to set up GCP:
     * IAM service account credentials API
  
 
-#### Creating Infrastructure for our project with Terrafrom
+#### Creating GCP Infrastructure with Terraform
+
+Within the terraform folder there are 3 files:
+* .terraform-version: just has the version number of terraform 
+* main.tf:
+    * terraform 
+        * this section of the code declares the terraform version, the backend (whether local, gcs, or s3), and the required providers which specifies public libraries where we will be getting functions from (kind of like python libraries and pip)
+    * provider
+        * adds a set of predefined resource types and data sources that terraform can manage such as google cloud storage bucket, data lake bucket, bigquery dataset, etc 
+        * where the variable for credentials would go
+    * resource 
+        * Specify and configure the resources 
+
+    * Do not change anything in this file. All changes should be made in the variables file 
+
+* variables.tf: 
+    * This file is where you specify the instances in the main file that use "var"
+    * locals: similar to constants 
+    * vairables: 
+        * generally passed during runtime
+        * can have default values 
+    * change all information that have comments to what would be applicable for you 
+
+    
+
+**Execution Steps**
+
+Once the files are established, you can run these commands within the folder (except for destroy)
+* <code>terraform init</code>: Initialize and Install
+* <code>terraform plan</code>: Match changes against the previous state
+* <code>terraform apply</code>: Apply changes to cloud 
+* <code>terraform destroy</code>: Remove your stack from the cloud 
+
  
