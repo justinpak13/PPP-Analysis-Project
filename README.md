@@ -92,4 +92,28 @@ Once the files are established, you can run these commands within the folder (ex
 * <code>terraform apply</code>: Apply changes to cloud 
 * <code>terraform destroy</code>: Remove your stack from the cloud 
 
- 
+#### Airflow 
+
+We will be using Apache Airflow through docker. 
+
+In docker, make sure that everything is up to date and that you have the correct amount of ram allocated (5gb min, ideally 8)
+
+##### Setup 
+Create an airflow folder and within the folder, import the official image and setup form the latest airflow version. This will download the the docker-compose.yaml file in the folder 
+
+<code>curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.2.4/docker-compose.yaml'</code>
+
+Next we need to set the aiflow user and create the dags, logs, and plugins folders 
+
+<code>mkdir -p ./dags ./logs ./plugins</code>
+<code>echo -e "AIRFLOW_UID=$(id -u)" > .env</code>
+
+* The dags directory is where you will be storing the airflow pipelines 
+* The logs directory stores the log information between the scheduler and the workers 
+* The plugins folder stores any custom function that are used within your dags 
+
+In order to ensure that airflow will work with GCP, we will create a custom Dockerfile and take the base image from our docker-compose.yaml file. The necessary google requirements will then be installed through the Dockerfile. (https://airflow.apache.org/docs/docker-stack/recipes.html) We then connect our docker-compose file to our Dockerfile by replacing the image with build. 
+
+Our Dockerfile essentially downloads the google cli tools and saves into our path, sets our user, and then imports the python packages from a saved requirements file 
+
+While we are editing the docker-compose.yaml file, also change the AIRFLOW__CORE__LOAD_EXAMPLES to false or else it will load predefined dag examples. 
