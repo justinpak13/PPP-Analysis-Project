@@ -65,11 +65,14 @@ x-airflow-common:
     GCP_PROJECT_ID: ppp-project-344217
     GCP_GCS_BUCKET: ppp_data_lake_ppp-project-344217
 
+
+
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
     - ../keys:/.google/credentials:ro
+    - ./addl_files:/opt/airflow/addl_files
 
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:

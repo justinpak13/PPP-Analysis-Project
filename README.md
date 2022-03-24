@@ -117,3 +117,12 @@ In order to ensure that airflow will work with GCP, we will create a custom Dock
 Our Dockerfile essentially downloads the google cli tools and saves into our path, sets our user, and then imports the python packages from a saved requirements file 
 
 While we are editing the docker-compose.yaml file, also change the AIRFLOW__CORE__LOAD_EXAMPLES to false or else it will load predefined dag examples. 
+
+#### Aiflow DAGS
+
+This is the section where we outline the process in which we will be getting our data. 
+
+After importing the necessary packages, I set the environment variables. The project_id and the bucket variables are established in the docker-compose.yaml file. The other environment variables are used to specify where we get our data, where we save it, and how we will transform it. The data files we are downloading include the main ppp data, the corresponding data dictionary, and the 2017 NAICS codes for industry which we will merge with the main data set 
+
+
+
