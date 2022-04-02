@@ -113,8 +113,11 @@ DO NOT RUN
 Next we need to set the aiflow user and create the logs, plugins, and scripts folders, I have already created the dags folder
 
 <code>mkdir -p ./logs ./plugins ./scripts</code>
+ 
 <code>echo -e "AIRFLOW_UID=$(id -u)" > .env</code>
 
+These commands may not work correctly in windows, so you will have to create them manually
+ 
 * The dags directory is where you will be storing the airflow pipelines 
 * The logs directory stores the log information between the scheduler and the workers 
 * The plugins folder stores any custom function that are used within your dags 
