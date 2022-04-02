@@ -47,7 +47,7 @@ Before working with our data, we first need to set up GCP:
         * Identity and Access Management (IAM) API
         * IAM service account credentials API
     * go to manage keys -> create new json key
-    * In the keys folder, replace the text file with your json file containing your key 
+    * In the keys folder, replace the text file with your json file containing your key and rename the file "google_credentials.json" for consistency going forward
 * download SDK for local setup 
     * https://cloud.google.com/sdk
 * set up environment variable to point to your downloaded auth-keys 
@@ -100,7 +100,8 @@ GCS is now ready for the data pipeline
  
 ## 5. Airflow 
 
-We will be using Apache Airflow through Docker, so make sure you have Docker downloaded and working. 
+We will be using Apache Airflow through Docker, so make sure you have Docker downloaded and working.
+Also, I started this project using an M1 Macbook and had a terrible time getting docker running, so I switched over to a windows pc. YMMV.
 
 In docker, make sure that everything is up to date and that you have the correct amount of ram allocated (5gb min, ideally 8)
 
@@ -145,7 +146,7 @@ The only things that need to be edited in the docker are the GCP_PROJECT_ID (can
 
 ## 6. Aiflow DAGS
  
-Once everything is running, you can navigate to http://localhost:8080/ and trigger the DAG. Go get some coffee as this will probably take a while. The section below explains what is happening behind the scenes 
+Once everything is running, you can navigate to http://localhost:8080/ and trigger the DAG. The username and password is airflow. Go get some coffee as this will probably take a while. The section below explains what is happening behind the scenes 
 
  The  DAG that is outlined below is not the most efficient. Since there are 13 large csv files to be downloaded from the SBA website, within our DAG file I created a list with the links. Then I set the start date to be 13 days prior to the current date of the run. Once Airflow runs, it counts the difference in days between the run date and the start date and chooses the corresponding link in the list. The approach is pretty roundabout, but I have created it this way for a few reasons. One, in order to resemble how more realistic batch data processing would work. Two, it allowed more immediate feedback when working on the project so I could move on to other sections of the DAG without waiting for all 13 files to be downloaded at once. And 3, it was an excuse to learn how to have different parts of the DAG communicate with each other. 
  
