@@ -36,30 +36,30 @@ The data workflow will consist of the following steps:
 ## 3. Setting up GCP 
 Before working with our data, we first need to set up GCP:
 * Create an account with Google email 
-* Set up the project 
+* Set up the project once you are on the google cloud console
 * setup service account and authentication for this project and download auth-keys
     * go to IAM & Admin -> service accounts -> create service account
-    * grant accesss
+    * create access to within the permissions tab
+        * storage admin
+        * storage object admin 
+        * BigQuery admin
+    * Under APIs and Services, enable the following:  
+        * Identity and Access Management (IAM) API
+        * IAM service account credentials API
     * go to manage keys -> create new json key
-    * save to key folder in project 
+    * In the keys folder, replace the text file with your json file containing your key and rename the file "google_credentials.json" for consistency going forward
 * download SDK for local setup 
     * https://cloud.google.com/sdk
 * set up environment variable to point to your downloaded auth-keys 
 
     <code> export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"</code>
+use set on windows 
 
     Refresh token/session, and verify authentication
 
     <code>gcloud auth application-default login</code>
 
-* create access to 
-    * storage admin
-    * storage object admin 
-    * BigQuery admin
-* Under APIs and Services, enable the following:  
-    * Identity and Access Management (IAM) API
-    * IAM service account credentials API
-
+ 
 ## 4. Terraform 
 
 https://www.terraform.io/downloads
@@ -80,7 +80,7 @@ Within the terraform folder there are 3 files:
     * Do not change anything in this file. All changes should be made in the variables file 
 
 * variables.tf: 
-    * This file is where you specify the instances in the main file that use "var"
+    * This file is where you specify the instances in the main file that use "var". In our case, the necessary ones are the credentials, the project id, and the region.
     * locals: similar to constants 
     * vairables: 
         * generally passed during runtime
@@ -90,39 +90,63 @@ Within the terraform folder there are 3 files:
    
 **Execution Steps**
 
-Once the files are established, you can run these commands within the folder (except for destroy)
+Once the files are established, you can run these commands within the terraform folder (except for destroy)
 * <code>terraform init</code>: Initialize and Install
 * <code>terraform plan</code>: Match changes against the previous state
 * <code>terraform apply</code>: Apply changes to cloud 
 * <code>terraform destroy</code>: Remove your stack from the cloud 
 
+GCS is now ready for the data pipeline 
+ 
 ## 5. Airflow 
 
-We will be using Apache Airflow through docker. 
+We will be using Apache Airflow through Docker, so make sure you have Docker downloaded and working.
+Also, I started this project using an M1 Macbook and had a terrible time getting docker running, so I switched over to a windows pc. YMMV.
 
 In docker, make sure that everything is up to date and that you have the correct amount of ram allocated (5gb min, ideally 8)
 
 ### Setup 
-Create an airflow folder and within the folder, import the official image and setup form the latest airflow version. This will download the the docker-compose.yaml file in the folder 
+I created an airflow folder and within the folder, imported the official image and setup form the latest airflow version. This downloaded the the docker-compose.yaml file in the folder 
 
+DO NOT RUN
 <code>curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.2.4/docker-compose.yaml'</code>
 
-Next we need to set the aiflow user and create the dags, logs, and plugins folders 
+Next we need to set the aiflow user and create the logs, plugins, and scripts folders, I have already created the dags folder
 
-<code>mkdir -p ./dags ./logs ./plugins</code>
+<code>mkdir -p ./logs ./plugins ./scripts</code>
+ 
 <code>echo -e "AIRFLOW_UID=$(id -u)" > .env</code>
 
+These commands may not work correctly in windows, so you will have to create them manually
+ 
 * The dags directory is where you will be storing the airflow pipelines 
 * The logs directory stores the log information between the scheduler and the workers 
 * The plugins folder stores any custom function that are used within your dags 
 
 In order to ensure that airflow will work with GCP, we will create a custom Dockerfile and take the base image from our docker-compose.yaml file. The necessary google requirements will then be installed through the Dockerfile. (https://airflow.apache.org/docs/docker-stack/recipes.html) We then connect our docker-compose file to our Dockerfile by replacing the image with build. 
 
-Our Dockerfile essentially downloads the google cli tools and saves into our path, sets our user, and then imports the python packages from a saved requirements file 
+Our Dockerfile essentially downloads the google cli tools and the requirements for PySpark and saves into our path, sets our user, and then imports the python packages from a saved requirements file
 
-While we are editing the docker-compose.yaml file, also change the AIRFLOW__CORE__LOAD_EXAMPLES to false or else it will load predefined dag examples. 
+The only things that need to be edited in the docker are the GCP_PROJECT_ID (can be found on homepage dashboard), the GCP_GCS_BUCKET (found in cloud storage section) and the BIGQUERY_DATASET (what you named the dataset in terraform that can be found in bigquery). Please change based on your configuration of GCS
+ 
+(While we are editing the docker-compose.yaml file, also change the AIRFLOW__CORE__LOAD_EXAMPLES to false or else it will load predefined dag examples.)
+ 
+ Then run the following commands: 
+ 
+ <code>docker-compose build</code> this may take a while 
+ 
+ <code>docker-compose up airflow-init</code>
+ 
+ <code>docker-compose up</code> 
+ 
+ Then run this command in another terminal to make sure everything is running healthy 
+ <code>docker ps</code>
+ 
+ 
 
 ## 6. Aiflow DAGS
+ 
+Once everything is running, you can navigate to http://localhost:8080/ and trigger the DAG. The username and password is airflow. Go get some coffee as this will probably take a while. The section below explains what is happening behind the scenes 
 
  The  DAG that is outlined below is not the most efficient. Since there are 13 large csv files to be downloaded from the SBA website, within our DAG file I created a list with the links. Then I set the start date to be 13 days prior to the current date of the run. Once Airflow runs, it counts the difference in days between the run date and the start date and chooses the corresponding link in the list. The approach is pretty roundabout, but I have created it this way for a few reasons. One, in order to resemble how more realistic batch data processing would work. Two, it allowed more immediate feedback when working on the project so I could move on to other sections of the DAG without waiting for all 13 files to be downloaded at once. And 3, it was an excuse to learn how to have different parts of the DAG communicate with each other. 
  
