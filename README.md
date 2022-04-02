@@ -12,30 +12,28 @@ The Paycheck Protection Program prioritizes millions of Americans employed by sm
 
 You can read more about the bill [here](https://www.congress.gov/bill/116th-congress/house-bill/748)
 
+This project aims to create a pipeline using a mix of technologies to get the data from the SBA website, make the appropriate transformations, upload to Google Cloud Service, and finally present the data in a dashboard using Google Data Studio
 
-<b>Data set</b> : https://data.sba.gov/dataset/ppp-foia
+**Data set**: https://data.sba.gov/dataset/ppp-foia
+
 **NAICS Codes**: https://www.census.gov/naics/?48967
 
  
-# Process
-
-## Creating a pipeline for processing this dataset & putting it into a data lake 
+## 2. Process
 
 I will be using GCP cloud storage as the data lake and Airflow in order to get the data into GCP. 
 
-The data workflow will consist of the following steps: 
-1) Downloading the csv files from the SBA website that we will store locally 
-2) Use a python script in order to convert the csv files into parquet 
-3) Upload the parquet files into Google Cloud Storage 
-4) Upload our files in Google Cloud Storage into a table BigQuery 
+The data workflow will consist of the following steps:
+1) Set up GCP and create our project 
+2) Use terraform to create our infrastructure in GCP 
+3) Using Airflow through Docker, run our pipeline by:
+4) Downloading the csv files from the SBA website 
+5) Use Pyspark in order to make necessary transformations to our CSV files and save as Parquet
+6) Upload the parquet files into Google Cloud Storage 
+7) Upload our files in Google Cloud Storage into a table in BigQuery 
+8) Take our Bigquery data and create a dashboard in Google data studio 
 
-### Requirements
-
-#### Terraform 
-
-https://www.terraform.io/downloads
-
-#### Setting up GCP 
+## 3. Setting up GCP 
 Before working with our data, we first need to set up GCP:
 * Create an account with Google email 
 * Set up the project 
@@ -61,9 +59,12 @@ Before working with our data, we first need to set up GCP:
 * Under APIs and Services, enable the following:  
     * Identity and Access Management (IAM) API
     * IAM service account credentials API
- 
 
-#### Creating GCP Infrastructure with Terraform
+## 4. Terraform 
+
+https://www.terraform.io/downloads
+
+**Creating GCP Infrastructure with Terraform**
 
 Within the terraform folder there are 3 files:
 * .terraform-version: just has the version number of terraform 
@@ -86,8 +87,7 @@ Within the terraform folder there are 3 files:
         * can have default values 
     * change all information that have comments to what would be applicable for you 
 
-    
-
+   
 **Execution Steps**
 
 Once the files are established, you can run these commands within the folder (except for destroy)
@@ -96,7 +96,7 @@ Once the files are established, you can run these commands within the folder (ex
 * <code>terraform apply</code>: Apply changes to cloud 
 * <code>terraform destroy</code>: Remove your stack from the cloud 
 
-#### Airflow 
+## 5. Airflow 
 
 We will be using Apache Airflow through docker. 
 
