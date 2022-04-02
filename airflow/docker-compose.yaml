@@ -64,6 +64,7 @@ x-airflow-common:
     # TODO: Please change GCP_PROJECT_ID & GCP_GCS_BUCKET, as per your config
     GCP_PROJECT_ID: ppp-project-344217
     GCP_GCS_BUCKET: ppp_data_lake_ppp-project-344217
+    BIGQUERY_DATASET: ppp_data_all
 
 
 

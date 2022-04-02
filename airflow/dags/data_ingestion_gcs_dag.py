@@ -24,7 +24,7 @@ from pyspark.sql import types
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET = os.environ.get("GCP_GCS_BUCKET")
 path_to_local_home = os.environ.get("AIRFLOW_HOME", "/opt/airflow/")
-BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET", 'ppp_data_all')
+BIGQUERY_DATASET = os.environ.get("BIGQUERY_DATASET")
 
 # Function that returns a link to the section of data determined by the run number 
 def choose_link(ti):

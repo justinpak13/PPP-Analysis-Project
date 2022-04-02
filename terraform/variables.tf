@@ -4,7 +4,7 @@ locals {
 
 variable "credentials" {
   description = "Where your auth keys are saved"
-  default = "../keys/ppp-project-344217-7aaf1a6906b4.json"  # edit to match your filename 
+  default = "../keys/google_credentials.json"  # edit to match your filename 
 }
 
 variable "project" {
