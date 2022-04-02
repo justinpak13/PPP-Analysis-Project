@@ -7,4 +7,6 @@ terraform.tfstate
 terraform.exe
 airflow/dags/__pycache__/
 airflow/logs/
-
+data_view.ipynb
+pyspark/
+airflow/dags_new
