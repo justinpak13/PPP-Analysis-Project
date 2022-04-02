@@ -60,6 +60,8 @@ Before working with our data, we first need to set up GCP:
     * Identity and Access Management (IAM) API
     * IAM service account credentials API
 
+* In the keys folder, replace the text file with your json file containing your key 
+ 
 ## 4. Terraform 
 
 https://www.terraform.io/downloads
