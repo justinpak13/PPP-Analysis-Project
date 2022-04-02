@@ -132,8 +132,8 @@ def pyspark_transform(src_file):
 
     # Merges our two pyspark dataframes, standardizes our zip code, and then saves down as parquet files 
     result_df = df.join(naics_df, df.NAICSCode == naics_df.NAICS_code, "left")
-    result_df = result_df.withColumn("BorrowerZip",when(col("BorrowerZip").contains('9'),regexp_replace('BorrowerZip','(?=-).*','')).otherwise(col("BorrowerZip")))
-    result_df = result_df.drop('NAICS_code','NAICSCode','ProcessingMethod','LoanStatusDate','ServicingLenderLocationID','ServicingLenderName','ServicingLenderAddress','ServicingLenderCity','ServicingLenderState','ServicingLenderZip')
+    result_df = result_df.withColumn("BorrowerZip",when(col("BorrowerZip").contains('-'),regexp_replace('BorrowerZip','(?=-).*','')).otherwise(col("BorrowerZip")))
+    result_df = result_df.drop('NAICS_code','NAICSCode','ProcessingMethod','LoanStatusDate','ServicingLenderLocationID','ServicingLenderAddress','ServicingLenderCity','ServicingLenderState','ServicingLenderZip')
     result_df.write.mode('overwrite').parquet(src_file.replace('.csv',''))
 
 # NOTE: takes 20 mins, at an upload speed of 800kbps. Faster if your internet has a better upload speed
