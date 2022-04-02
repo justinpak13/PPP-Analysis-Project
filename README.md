@@ -123,13 +123,16 @@ In order to ensure that airflow will work with GCP, we will create a custom Dock
 
 Our Dockerfile essentially downloads the google cli tools and the requirements for PySpark and saves into our path, sets our user, and then imports the python packages from a saved requirements file
 
-The only things that need to be edited in the docker are the GCP_PROJECT_ID (can be found on homepage dashboard) and the GCP_GCS_BUCKET (found in cloud storage section). Please change based on your configuration of GCS
+The only things that need to be edited in the docker are the GCP_PROJECT_ID (can be found on homepage dashboard), the GCP_GCS_BUCKET (found in cloud storage section) and the BIGQUERY_DATASET (what you named the dataset in terraform that can be found in bigquery). Please change based on your configuration of GCS
  
 (While we are editing the docker-compose.yaml file, also change the AIRFLOW__CORE__LOAD_EXAMPLES to false or else it will load predefined dag examples.)
  
  Then run the following commands: 
+ 
  <code>docker-compose build</code> this may take a while 
+ 
  <code>docker-compose up airflow-init</code>
+ 
  <code>docker-compose up</code> 
  
  Then run this command in another terminal to make sure everything is running healthy 
