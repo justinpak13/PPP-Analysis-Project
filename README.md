@@ -36,10 +36,9 @@ The data workflow will consist of the following steps:
 ## 3. Setting up GCP 
 Before working with our data, we first need to set up GCP:
 * Create an account with Google email 
-* Set up the project 
+* Set up the project once you are on the google cloud console
 * setup service account and authentication for this project and download auth-keys
     * go to IAM & Admin -> service accounts -> create service account
-    * grant accesss
     * go to manage keys -> create new json key
     * save to key folder in project 
 * download SDK for local setup 
