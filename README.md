@@ -53,6 +53,7 @@ Before working with our data, we first need to set up GCP:
 * set up environment variable to point to your downloaded auth-keys 
 
     <code> export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"</code>
+use set on windows 
 
     Refresh token/session, and verify authentication
 
