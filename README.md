@@ -1,17 +1,21 @@
-# data-enineering-zoomcamp-project
-Analysis of PPP loan data for the final project of the Data Engineering Zoomcamp
+# Data Engineering Zoomcamp Final Project 
+This repo contains the work carried out as part of the final project for the DE zoomcamp. This course is conducted by Alexey Grigorev. You can take the course at any time and it is free. Links to course mentioned below:
+* https://github.com/DataTalksClub/data-engineering-zoomcamp
+* https://www.youtube.com/c/DataTalksClub/playlists
 
+## 1. About the Project
 In response to the economic devastation of the COVID-19 pandemic, the United States Congress passed the Coronavirus Aid, Relief, and Economic Security (CARES) act. 
 
 "The Paycheck Protection Program established by the CARES Act, is implemented by the Small Business Administration with support from the Department of the Treasury.  This program provides small businesses with funds to pay up to 8 weeks of payroll costs including benefits. Funds can also be used to pay interest on mortgages, rent, and utilities.
 
 The Paycheck Protection Program prioritizes millions of Americans employed by small businesses by authorizing up to $659 billion toward job retention and certain other expenses." -> [Department of the Treasury](https://home.treasury.gov/policy-issues/coronavirus/assistance-for-small-businesses/paycheck-protection-program)
 
-<b>Data set</b> : https://data.sba.gov/dataset/ppp-foia
+You can read more about the bill [here](https://www.congress.gov/bill/116th-congress/house-bill/748)
 
-<b>Question</b>:
-* General facts of the program
-* What do the distributions of the funds look like compared to the makeup of [small businesses](https://cdn.advocacy.sba.gov/wp-content/uploads/2019/04/23142719/2019-Small-Business-Profiles-US.pdf)
+
+<b>Data set</b> : https://data.sba.gov/dataset/ppp-foia
+**NAICS Codes**: https://www.census.gov/naics/?48967
+
  
 # Process
 
