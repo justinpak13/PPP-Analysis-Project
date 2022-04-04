@@ -12,7 +12,7 @@ The Paycheck Protection Program prioritizes millions of Americans employed by sm
 
 You can read more about the bill [here](https://www.congress.gov/bill/116th-congress/house-bill/748)
 
-This project aims to create a pipeline using a mix of technologies to get the data from the SBA website, make the appropriate transformations, upload to Google Cloud Service, and finally present the data in a dashboard using Google Data Studio
+This project aims to create a pipeline using a mix of technologies to get the data from the SBA website, make the appropriate transformations, upload to Google Cloud Service, and finally present the data in a dashboard using Google Data Studio in a such a way that we can gather some insight as to how the money was spent in this program. I would like to see a breakdown of the data based on different industries and create a way to visualize the location of businesses with the addresses given. 
 
 **Data set**: https://data.sba.gov/dataset/ppp-foia
 
