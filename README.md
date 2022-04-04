@@ -26,12 +26,14 @@ I will be using GCP cloud storage as the data lake and Airflow in order to get t
 The data workflow will consist of the following steps:
 1) Set up GCP and create our project 
 2) Use terraform to create our infrastructure in GCP 
-3) Using Airflow through Docker, run our pipeline by:
-4) Downloading the csv files from the SBA website 
-5) Use Pyspark in order to make necessary transformations to our CSV files and save as Parquet
-6) Upload the parquet files into Google Cloud Storage 
-7) Upload our files in Google Cloud Storage into a table in BigQuery 
-8) Take our Bigquery data and create a dashboard in Google data studio 
+3) Using Airflow through Docker to run our pipeline:
+
+Pipeline:
+1) Downloading the csv files from the SBA website 
+2) Use Pyspark in order to make necessary transformations to our CSV files and save as Parquet
+3) Upload the parquet files into Google Cloud Storage 
+4) Upload our files in Google Cloud Storage into a table in BigQuery 
+5) Take our Bigquery data and create a dashboard in Google data studio 
 
 Requirements: 
 * GCP Account
