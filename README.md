@@ -54,16 +54,15 @@ After you have cloned the repo, we first need to set up GCP:
     * Under APIs and Services, enable the following:  
         * Identity and Access Management (IAM) API
         * IAM service account credentials API
-    * go to manage keys -> create new json key
-    * In the keys folder, replace the text file with your json file containing your key and rename the file "google_credentials.json" for consistency going forward
+    * back under the IAM & admin section, select the service account you made earlier. Then go to keys -> add key -> create new json key
+    * In the folder that you saved this repo in, there should be a keys folder. In the keys folder, replace the text file with your json file containing your key and rename the file "google_credentials.json" for consistency going forward
 * download SDK for local setup 
     * https://cloud.google.com/sdk
-* set up environment variable to point to your downloaded auth-keys 
+* set up environment variable to point to your downloaded auth-keys. Run the following code but replace the path
 
-    <code> export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"</code>
-use set on windows 
+    <code> export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>google_credentials.json"</code> use set instead of export on windows 
 
-    Refresh token/session, and verify authentication
+* Refresh token/session, and verify authentication
 
     <code>gcloud auth application-default login</code>
 
@@ -85,7 +84,7 @@ Within the terraform folder there are 3 files:
     * resource 
         * Specify and configure the resources 
 
-    * Do not change anything in this file. All changes should be made in the variables file 
+ Do not change anything in the main file. All changes should be made in the variables file 
 
 * variables.tf: 
     * This file is where you specify the instances in the main file that use "var". In our case, the necessary ones are the credentials, the project id, and the region.
