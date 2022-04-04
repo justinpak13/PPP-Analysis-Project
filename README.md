@@ -33,6 +33,11 @@ The data workflow will consist of the following steps:
 7) Upload our files in Google Cloud Storage into a table in BigQuery 
 8) Take our Bigquery data and create a dashboard in Google data studio 
 
+Requirements: 
+* GCP Account
+* Terraform
+* Docker
+
 ## 3. Setting up GCP 
 Before working with our data, we first need to set up GCP:
 * Create an account with Google email 
