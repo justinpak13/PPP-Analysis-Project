@@ -41,7 +41,8 @@ Requirements:
 * Docker
 
 ## 3. Setting up GCP 
-Before working with our data, we first need to set up GCP:
+
+After you have cloned the repo, we first need to set up GCP:
 * Create an account with Google email 
 * Set up the project once you are on the google cloud console
 * setup service account and authentication for this project and download auth-keys
