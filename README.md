@@ -170,11 +170,21 @@ The DAG we are using is broken down into 6 different steps:
  
 The format_to_parquet_task in our Dag contains our PySpark Code. This function first creates a SparkSession. Then it applies a schema which I have created on the saved csv to create a pyspark dataframe. It then does the same thing to our predownloaded csv file that contains our NAICS codes such that they have no issues when merging. The dates are also transformed so that pyspark can more easily read them as datetime types. The zip codes in the data are not uniform in the way that they are read in, so a transformation is done so that google data studio can more easily read them in as postal code types. Finally, it drops some unecessary columns and saves down in a folder of parquet files
  
-## 8. Google Data Studio Dashboard 
+ 
+## 8. BigQuery Clustering
 
-I created my dashboard within google data studio by connecting to the datawarehouse we created in airflow to a report. This should be fairly straighforward if you are using the same google account for both. I also made the necessary schema adjustments to properly match the data to the future charts. The dashboard is broken up into two pages. The first being an overview with a breakdown based on different categories and the second as a map with a table with information based on zip code. Sorry that it isnt that pretty. 
+It is normally a good idea to partition your data such that future queries will be more optimized. However, because the date data does not provide much relevant information, we shall focus on clustering.  The two main dimensions in which I would like to examine the PPP data are through the NAICS codes and the Zip Codes, but based on the number of zip codes, it may not be ideal to partition based on that so instead I will just focus on the NAICS codes. By running the following query, a clustered table will be created from our external table based on NAICS code. Make sure to change the project and dataset to match yours 
+ 
+```
+ CREATE OR REPLACE TABLE ppp-project-344217.ppp_data_all.partitioned_data
+CLUSTER BY NAICS_Title AS 
+SELECT * FROM ppp-project-344217.ppp_data_all.external_table
+``` 
+ 
+## 9. Google Data Studio Dashboard 
+
+I created my dashboard within google data studio by connecting to the clustered datawarehouse we created earlier to a report. This should be fairly straighforward if you are using the same google account for both. I also made the necessary schema adjustments to properly match the data to the future charts. The dashboard is broken up into two pages. The first being an overview with a breakdown based on different categories and the second as a map with a table with information based on zip code. Sorry that it isnt that pretty. 
  
 Link to the dashboard [here](https://datastudio.google.com/reporting/382aebdd-ae5d-4683-ab4c-2e81357e7295)
  
-In future iterations of this project, it would be nice to also partition the data in our warehouse in such a way to optimize future queries. Unfortunatley, due to time constraints that will have to be left for another time. 
 
