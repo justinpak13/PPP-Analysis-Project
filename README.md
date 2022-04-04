@@ -87,7 +87,7 @@ Within the terraform folder there are 3 files:
  Do not change anything in the main file. All changes should be made in the variables file 
 
 * variables.tf: 
-    * This file is where you specify the instances in the main file that use "var". In our case, the necessary ones are the credentials, the project id, and the region.
+    * This file is where you specify the instances in the main file that use "var". In our case, the necessary ones are the project id and the region. The project id can be found in the main console page for your project while the region is based on your location. 
     * locals: similar to constants 
     * vairables: 
         * generally passed during runtime
@@ -108,7 +108,7 @@ GCS is now ready for the data pipeline
 ## 5. Airflow 
 
 We will be using Apache Airflow through Docker, so make sure you have Docker downloaded and working.
-Also, I started this project using an M1 Macbook and had a terrible time getting docker running, so I switched over to a windows pc. YMMV.
+Also, I started this project using an M1 Macbook and had a terrible time getting docker running, so I had to switch over to a windows pc. YMMV.
 
 In docker, make sure that everything is up to date and that you have the correct amount of ram allocated (5gb min, ideally 8)
 
@@ -118,13 +118,14 @@ I created an airflow folder and within the folder, imported the official image a
 DO NOT RUN
 <code>curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.2.4/docker-compose.yaml'</code>
 
-Next we need to set the aiflow user and create the logs, plugins, and scripts folders, I have already created the dags folder
+Next we need to set the aiflow user and create the logs, plugins, and scripts folders, I have already created the dags folder.
+ 
+Within the aiflow folder either run the following commands to create the necessary folders and .env file or create them manually.
 
 <code>mkdir -p ./logs ./plugins ./scripts</code>
  
 <code>echo -e "AIRFLOW_UID=$(id -u)" > .env</code>
 
-These commands may not work correctly in windows, so you will have to create them manually
  
 * The dags directory is where you will be storing the airflow pipelines 
 * The logs directory stores the log information between the scheduler and the workers 
@@ -134,7 +135,7 @@ In order to ensure that airflow will work with GCP, we will create a custom Dock
 
 Our Dockerfile essentially downloads the google cli tools and the requirements for PySpark and saves into our path, sets our user, and then imports the python packages from a saved requirements file
 
-The only things that need to be edited in the docker are the GCP_PROJECT_ID (can be found on homepage dashboard), the GCP_GCS_BUCKET (found in cloud storage section) and the BIGQUERY_DATASET (what you named the dataset in terraform that can be found in bigquery). Please change based on your configuration of GCS
+The only things that need to be edited in the docker-compose.yaml file are the GCP_PROJECT_ID (can be found on homepage dashboard), the GCP_GCS_BUCKET (found in cloud storage section) and the BIGQUERY_DATASET (what you named the dataset in terraform. Can be found in bigquery but if you did not edit it, then it would be ppp_data_all). Please change lines 65-67 based on your configuration of GCS
  
 (While we are editing the docker-compose.yaml file, also change the AIRFLOW__CORE__LOAD_EXAMPLES to false or else it will load predefined dag examples.)
  
